@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>setting</title>
+</head>
+<body>
+{% extends "base.html"%}
+<div id="main">
+
+    {% block content %}
+    <div id="content">
+        <div class="panel">
+            <div class="header">
+                <ul class="breadcrumb">
+                    <li><a href="/">主页</a><span class="divider">/</span></li>
+                    <li class="active">收到私信</li>
+                </ul>
+            </div>
+
+            <div class="inner">
+                {% for r in receives %}
+                <div>
+                    <a href = {{ url_for(".view", id = r.id) }} > {{ r.user_name() }} : {{ r.title }}</a>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">发送的私信</span>
+            </div>
+
+            <div class="inner">
+                {% for s in sends%}
+                <div>
+                    <a href = {{ url_for(".view", id = s.id) }} > {{ s.user_name() }} : {{ s.title }}</a>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    {% endblock %}
+</div>
+
+
+</body>
+</html>

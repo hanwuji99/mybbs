@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>setting</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/lib/editor/editor.css">
+    <link rel="stylesheet" href="/static/lib/webuploader/webuploader.css">
+    <script src="/static/lib/jquery-3.0.0.min.js"></script>
+    <script src="/static/lib/markdownit.js"></script>
+    <script src="/static/lib/webuploader/webuploader.withoutimage.js"></script>
+    <script src="/static/lib/editor/editor.js"></script>
+    <script src="/static/lib/editor/ext.js"></script>
+</head>
+<body>
+{% extends "base.html"%}
+<div id="main">
+    {% block sidebar %}
+        <div id="sidebar">
+            <div class="panel">
+                <div class="header">
+                    <span class="col_fade">发送者</span>
+                </div>
+                <div class="inner">
+                <div class="user_card">
+                    <div>
+                        <a class="user_avatar" href="/user/{{ mail.user().username }}">
+                            <img src={{"/uploads/" + mail.user().user_image + '?v=3&amp;s=120'}} title="mail.user().user_image">
+                        </a>
+                        <span class="user_name"><a class="dark" href="/user/{{ mail.user().username }}">{{ mail.user().username }}</a></span>
+
+                        <div class="board clearfix">
+                            <div class="floor">
+                                <span class="big">积分: 0 </span>
+                            </div>
+                        </div>
+                        <div class="space clearfix"></div>
+                        <span class="signature">
+                            {{ mail.user().user_idiograph }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="panel">
+                    <div class="inner">
+                        <a href="{{url_for('user.mail', username=mail.user_name())}}" class="create_topic_btn">
+                            <span class="span-success">回复私信</span>
+                        </a>
+                    </div>
+                </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+    <div id="content">
+        <div class="panel">
+            <div class="header">
+                <ul class="breadcrumb">
+                    <li><a href="/">主页</a><span class="divider">/</span></li>
+                    <li class="active"><a href="/mail">私信</a></li>
+                </ul>
+            </div>
+            <div class="inner topic">
+                <div class="topic_content">
+                    <div class="markdown-text"><h3>{{ mail.title }}</h3>
+                        <p>{{ mail.content }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</div>
+
+</body>
+</html>

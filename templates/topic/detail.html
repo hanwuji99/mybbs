@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bbs club</title>
+    <script src="https://cdn.bootcss.com/marked/0.3.6/marked.min.js"></script>
+    <script src="/static/js/marked.js"></script>
+</head>
+<body>
+{% extends "base.html"%}
+<div id="main">
+    {% block sidebar %}
+    <div id="sidebar">
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">作者</span>
+            </div>
+            <div class="inner">
+                <div class="user_card">
+                    <div>
+                        <a class="user_avatar" href="/user/{{ topic.user().username }}">
+                            <img src={{"/uploads/" + topic.user().user_image + '?v=3&amp;s=120'}} title="Wang-Xuan">
+                        </a>
+                        <span class="user_name"><a class="dark" href="/user/{{ topic.user().username }}">{{ topic.user().username }}</a></span>
+
+                        <div class="board clearfix">
+                            <div class="floor">
+                                <span class="big">积分: 0 </span>
+                            </div>
+                        </div>
+                        <div class="space clearfix"></div>
+                        <span class="signature">
+                            {{topic.user().user_idiograph}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">作者其它话题</span>
+            </div>
+            <div class="inner">
+                <ul class="unstyled">
+                    {% for t in other_topic %}
+                    <li>
+                        <div><a class="dark topic_title" href="{{ url_for('topic.detail', id=t.id) }}"
+                                title="{{ t.title }}">{{ t.title }}</a>
+
+                            </a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block content %}
+    <div id="content">
+        <div class='panel'>
+            <div class='header topic_header'>
+                <span class="topic_full_title">
+                    {{ topic.title }}
+                </span>
+                <div class="changes">
+                    <span>
+                        发布于 {{topic.create_time()}}
+                    </span>
+                        <span>
+                        作者
+                        <a href="/user/{{ topic.user().username }}">{{ topic.user().username }}</a>
+                    </span>
+                        <span>
+                        {{ topic.views }} 次浏览
+                    </span>
+                        <span>
+                        来自 <a href="/topic?board_id={{ topic.board_id }}">{{ topic.board().title }}</a>
+                    </span>
+                </div>
+            </div>
+
+            <div class='inner topic'>
+                <div class='topic_content'>
+                    <div class="markdown-text">
+                        <div id="topic-content"></div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='panel'>
+            <div class='header'>
+                <span class='col_fade'>
+                    <!-- 过滤器 -->
+                    {{ topic.replies() | count }} 回复
+                </span>
+            </div>
+            {% for r in topic.replies() %}
+            <div class='cell reply_area reply_item'>
+                <div class='author_content'>
+                    <a href="/user/{{ r.user().username }}" class="user_avatar">
+                        <img src={{"/uploads/" + r.user().user_image + '?v=3&amp;s=120' }}
+                        title="{{ r.user().username }}"/>
+                    </a>
+                    <div class='user_info'>
+                        <a class='dark reply_author' href="/user/{{ r.user().username }}">
+                            {{ r.user().username }}
+                        </a>
+                        <a class="reply_time">
+                            {{ loop.index }}楼 • {{r.time()}}
+                        </a>
+                    </div>
+                    <div class='user_action'>
+                        <span>
+                            <i class="fa up_btn
+                              fa-thumbs-o-up
+                              invisible" title="喜欢"></i>
+                            <span class="up-count">
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class='reply_content from-leiwei1991'>
+                    <div class="markdown-text">
+                        {{ r.content }}
+                    </div>
+                    <div class="markdown-topic">
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!--<div>-->
+            <!--<form action="{{ url_for('reply.add') }}" method="post">-->
+            <!--<input type="hidden" name="topic_id" value="{{ topic.id }}">-->
+            <!--<textarea name="content"></textarea>-->
+            <!--<button>添加回复</button>-->
+            <!--</form>-->
+            <!--</div>-->
+        </div>
+        <div class='panel'>
+            <div class='header'>
+                <span class='col_fade'>添加回复</span>
+            </div>
+            <div class='inner reply'>
+                <form id='reply_form' action="{{ url_for('reply.add') }}" method='post'>
+                    <div class='markdown_editor in_editor'>
+                        <div class='markdown_in_editor'>
+                            <input type="hidden" name="topic_id" value="{{ topic.id }}">
+                            <textarea class='editor' name='content' rows='8'></textarea>
+
+                            <div class='editor_buttons'>
+                                <input class='span-primary submit_btn' type="submit" data-loading-text="回复中.."
+                                       value="回复">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="123"></div>
+    {% endblock %}
+</div>
+<!-- 评论板块 -->
+</div>
+{% block script %}
+<script class="hidden-content" type="gamle/text">{{ topic.content }}</script>
+<script src="../static/js/detail.js"></script>
+{% endblock %}
+</body>
+</html>
