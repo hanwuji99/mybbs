@@ -1,6 +1,6 @@
 import time
 import json
-# from models import Model
+from models import Model
 from models.user import User
 from models.mongua import Mongua
 import logging
