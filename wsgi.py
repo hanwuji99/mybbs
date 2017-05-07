@@ -15,6 +15,10 @@ ln -s /var/www/mybbs/bbs.conf /etc/supervisor/conf.d/bbs.conf
 
 ln -s /var/www/mybbs/bbs.nginx /etc/nginx/sites-enabled/bbs
 
+ln -s /var/www/mybbs/redis-server.conf /etc/supervisor/conf.d/redis-server.conf
+
+ln -s /var/www/mybbs/mongod.conf /etc/supervisor/conf.d/mongod.conf
+
 
 
 ➜  ~ cat /etc/supervisor/conf.d/bbs.conf
