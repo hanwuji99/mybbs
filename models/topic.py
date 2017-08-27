@@ -89,10 +89,10 @@ class Topic(Mongua):
 
     @classmethod
     def cache_all(cls):
-        if Topic.should_update_all:
-            Topic.cache.set("topic_all", cls.all())
-            Topic.should_update_all = False
-        return Topic.cache.get("topic_all")
+        # if Topic.should_update_all:
+        #     Topic.cache.set("topic_all", cls.all())
+        #     Topic.should_update_all = False
+        # return Topic.cache.get("topic_all")
 
         # 2. redis cache
         if Topic.should_update_all:
