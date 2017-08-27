@@ -47,7 +47,7 @@ if __name__ == '__main__':
     # host 参数指定为 '0.0.0.0' 可以让别的机器访问你的代码
     config = dict(
         debug=True,
-        host='127.0.0.1',
+        host='0.0.0.0',
         port=2000,
     )
     configure_log(app)
